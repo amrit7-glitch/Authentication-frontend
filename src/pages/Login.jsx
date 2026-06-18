@@ -45,8 +45,8 @@ function Login() {
     };
 
     const handleGoogleLogin = () => {
-    window.location.href =
-        `${import.meta.env.VITE_API_URL}/auth/google`;
+    // Using absolute URL to ensure it hits the backend on Render
+    window.location.href = "https://authentication-pro-jlye.onrender.com/api/v1/auth/google";
 };
 
     return (
