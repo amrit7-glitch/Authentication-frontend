@@ -1,19 +1,26 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// This page sits between the OAuth redirect and /profile.
-// The browser needs a moment after the redirect to store
-// the httpOnly cookies before we make API calls.
 function AuthSuccess() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Small delay ensures cookies from the redirect are stored
-    const timer = setTimeout(() => {
-      navigate("/profile", { replace: true });
-    }, 300);
+    const params = new URLSearchParams(window.location.search);
+    const accessToken = params.get("accessToken");
+    const refreshToken = params.get("refreshToken");
 
-    return () => clearTimeout(timer);
+    if (accessToken) {
+      // Store tokens in localStorage
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+
+      // Clean the tokens out of the URL immediately
+      window.history.replaceState({}, "", "/auth/success");
+
+      navigate("/profile", { replace: true });
+    } else {
+      navigate("/login?error=auth_failed", { replace: true });
+    }
   }, [navigate]);
 
   return (
