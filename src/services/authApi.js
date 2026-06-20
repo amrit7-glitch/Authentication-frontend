@@ -48,17 +48,21 @@ export const getProfile = async () => {
 };
 
 export const logoutUser = async () => {
-  // ✅ Clear localStorage on logout
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("refreshToken");
+  // ✅ Grab token BEFORE removing it
+  const token = localStorage.getItem("accessToken");
 
   const response = await fetch(`${API_URL}/logout`, {
     method: "POST",
     credentials: "include",
     headers: {
-      Authorization: `Bearer ${getToken()}`,
+      ...(token && { Authorization: `Bearer ${token}` }),
     },
   });
+
+  // ✅ Clear AFTER the request completes
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+
   const data = await response.json();
   if (!response.ok) throw new Error(data.message);
   return data;
