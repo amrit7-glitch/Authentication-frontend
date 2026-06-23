@@ -45,7 +45,7 @@ function Login() {
     };
 
     const handleGoogleLogin = () => {
-  // ✅ Must match the mount point in app.js — /auth/google, NOT /api/v1/auth/google
+  
   window.location.href = "https://authentication-pro-jlye.onrender.com/auth/google";
 };
 

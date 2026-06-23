@@ -16,7 +16,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
-        {/* ✅ Catches the OAuth redirect before going to /profile */}
+        {/* Catches the OAuth redirect before going to /profile */}
         <Route path="/auth/success" element={<AuthSuccess />} />
       </Routes>
     </BrowserRouter>

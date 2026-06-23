@@ -25,7 +25,7 @@ export const loginUser = async (userData) => {
   const data = await response.json();
   if (!response.ok) throw new Error(data.message);
 
-  // ✅ Also store token from email/password login if backend returns it
+  
   if (data.data?.accessToken) {
     localStorage.setItem("accessToken", data.data.accessToken);
   }
@@ -38,7 +38,7 @@ export const getProfile = async () => {
     method: "GET",
     credentials: "include",
     headers: {
-      // ✅ Send token as header — works cross-domain unlike cookies
+      
       Authorization: `Bearer ${getToken()}`,
     },
   });
@@ -48,7 +48,7 @@ export const getProfile = async () => {
 };
 
 export const logoutUser = async () => {
-  // ✅ Grab token BEFORE removing it
+  
   const token = localStorage.getItem("accessToken");
 
   const response = await fetch(`${API_URL}/logout`, {
@@ -59,7 +59,7 @@ export const logoutUser = async () => {
     },
   });
 
-  // ✅ Clear AFTER the request completes
+  
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
 
